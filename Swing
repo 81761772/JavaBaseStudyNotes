@@ -1,1 +1,4 @@
-
+1.关于获取图片所在的URL:
+  当使用 “URL url = 类名.class.getResource("图片名.jpg")” 获取图片URL时，图片应放在文件夹bin中和.class文件在一起。
+  
+2.需要添加按钮组时，不需要“con.add(group)”之类的语句，只需正常使用“con.add(按钮引用名)”和“group.add(按钮引用名)”即可。

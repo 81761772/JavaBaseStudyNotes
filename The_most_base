@@ -33,3 +33,5 @@ for(int i = first;i < last;i++){
 
 12.关于传递可变参数：eg: public Example(String...strings)
    即调用时参数个数是可变的。
+
+13.需实现无限循环可用“while(true)”或“for(;;)”。

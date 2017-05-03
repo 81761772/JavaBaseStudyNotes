@@ -1,1 +1,7 @@
-
+1.
+public class MyException extends Exception{
+    public MyException(String ErrorMessage){
+        super(ErrorMessage);
+    }
+}
+以上代码创建了一个自定义异常，需要注意的是：父类默认构造方法是不含参的，如果需要在子类的构造函数中传递参数，则需要使用super(传递参数)。

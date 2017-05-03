@@ -35,3 +35,5 @@ for(int i = first;i < last;i++){
    即调用时参数个数是可变的。
 
 13.需实现无限循环可用“while(true)”或“for(;;)”。
+
+14.JAVA中不支持多继承。

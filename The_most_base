@@ -1,13 +1,13 @@
 1.
-for(int i = first;i < last;i++){
-    if(Condition){
-        return target;
-    }
-    return -1;
-}
+  for(int i = first;i < last;i++){
+      if(Condition){
+          return target;
+      }
+      return -1;
+  }
 
-注意以上用法：for循环会一直进行，直到条件Condition得到满足，此时返回target，跳出for循环（需要注意的是，假如第一次循环和第二次循环都满足Condition条件
-时，循环会在第一次跳出，而不执行第二次循环）。若一直到循环结束Condition都没有得到满足，则返回-1。
+  注意以上用法：for循环会一直进行，直到条件Condition得到满足，此时返回target，跳出for循环（需要注意的是，假如第一次循环和第二次循环都满足Condition
+  条件时，循环会在第一次跳出，而不执行第二次循环）。若一直到循环结束Condition都没有得到满足，则返回-1。
 
 2.目前来看，JAVA中不存在指针，而用引用来代替。
 
@@ -43,3 +43,5 @@ for(int i = first;i < last;i++){
 14.JAVA中不支持多继承。
 
 15.在内部类中可以随意使用外部类的成员，即使这些成员被修饰为private。
+
+16.对象存储在堆中，对象引用存储在堆栈中。

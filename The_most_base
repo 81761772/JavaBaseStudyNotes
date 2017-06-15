@@ -74,3 +74,5 @@
 
 24.现有一个方法：void exam(datatype n)，当调用该方法时传入参数的类型若小于datatype则自动提升，若大于datatype则需进行窄化转换。
    Java类型由低字节到高字节提升规律如下：byte->short->int->long->float->double，char类型直接提升到int类型。
+   
+25.使用System.out.println("对象引用")方法打印对象时，会默认调用该对象的toString()方法。

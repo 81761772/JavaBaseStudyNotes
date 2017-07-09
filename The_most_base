@@ -77,3 +77,6 @@
    Java类型由低字节到高字节提升规律如下：byte->short->int->long->float->double，char类型直接提升到int类型。
    
 26.使用System.out.println("对象引用")方法打印对象时，会默认调用该对象的toString()方法。
+
+27.javadoc只能为public和protected成员进行文档注释，private和包内可访问成员的注释会被忽略掉，不过可以用-private进行标记，以便
+   把private成员的注释也包括在内。

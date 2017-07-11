@@ -1,1 +1,15 @@
-
+1.String有两种创建字符串的形式：①String s = new String("s"); ②String s = "s";
+  第一种先创建一个String类型的对象引用，然后在堆中开辟一个新的存储空间以存放String对象，然后将引用指向这个对象；
+  第二种先创建一个String类型的对象引用，然后查找栈中有没有存放"s"，若有，将引用指向"s"；若无，则将"s"存放进栈，并将引用指向"s"。
+  eg1:
+  String s1 = "s";
+  String s2 = "s";
+  System.out.println(s1==s2);
+  //结果：true
+  eg2:
+  String s1 = new String("s");
+  String s2 = new String("s");
+  System.out.println(s1==s2);
+  //结果：false
+  例1在创建完s1后，栈中已经存在"s"，故在创建s2时直接将引用指向这个"s"即可，故s1和s2指向同一个地址，故程序结果为true；
+  例2则是在堆中为s1和s2的对象分别开辟了不同的存储空间，故程序结果为false。

@@ -38,16 +38,29 @@
 14.javadoc只能为public和protected成员进行文档注释，private和包内可访问成员的注释会被忽略掉，不过可以用-private进行标记，以便
    把private成员的注释也包括在内。
 
-15.关于singleton模式：
-   eg:    class Test{
-              private Test(){}
-              private static Test t = new Test();
-              public static Test access(){
-                  return t;
-              }
-          }
-   由于Test()类的唯一的构造方法被修饰为private，故无法通过"new"的方式创建对象，所以只能通过access()方法返回一个对象引用，这种模式避免了类在
-   外部被实例化，且保证了该类只有一个实例存在。
+15.关于类的访问权限，有以下几点需要注意：
+   （1）类只能是public或包访问权限（内部类除外）；
+   （2）如果不希望他人对该类拥有访问权限，可以把构造器都指定为private，从而阻止他人创建该类的对象，但有一个例外，即该类的对象可在该类的static成员
+    内部创建。这种特性催生了两种在构造器被指定为privaete情况下得到该类对象的方法：
+    ①通过static方法返回该类的对象：
+     eg:
+        class Soup1{
+            private Soup1(){}
+            public static Soup1 makeSoup(){
+                return new Soup1();
+            }
+        }
+    
+    ②singleton模式：
+     eg:    class Soup2{
+                private Soup2(){}
+                private static Soup2 s = new Soup2();
+                public static Soup2 access(){
+                    return s;
+                }
+            }
+     在singleton模式中，当外部获取Soup2的对象时，Soup2类的对象是作为Soup2的一个static private成员被创建的，故只能获取到一个，
+     且只有通过一个public方法（该例中是access()）才能进行获取。
    
 16.this关键字只能在方法内部使用，表示调用该方法的对象的引用，如this.a即该对象的成员，this.b()即该对象的方法。
 

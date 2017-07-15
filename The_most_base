@@ -79,10 +79,9 @@
 21.匿名内部类与普通内部类在实现向上转型为接口上有异曲同工之妙，普通内部类将实例化后的内部类对象赋给接口类型的引用以实现向上转型，而匿名内部类直接在
    addActionListener()方法的括号内返回一个接口类型的匿名内部类对象，如下例eg:
    JButton jb = new JButton();
-   jb.addActionListener(new ActionListener){//括号内直接实例化了一个接口类型，省去了将实例化结果赋给接口类型的引用这一步
-       public void actionPerformed(ActionEvent arg0){
-       }
-   );
+   jb.addActionListener(new ActionListener(){//括号内直接实例化了一个接口类型，省去了将实例化结果赋给接口类型的引用这一步
+       public void actionPerformed(ActionEvent arg0){}
+   });
 
 22.关于传递可变参数：eg: public Example(String...strings)
    即调用时参数个数是可变的。

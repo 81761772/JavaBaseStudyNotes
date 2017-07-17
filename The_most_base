@@ -125,3 +125,8 @@
    和源文件A所在的包exa必须在同一个文件夹（在本例中该文件夹是java，包名是exa)中；
    ②编辑A和B，A开头为“package exa;”，B开头为“import exa.A;”；
    ③打开cmd窗口，进入B所在路径并执行B。
+   
+33.当一个源文件中有多个类时，可为每个类都创建一个main()方法，便于进行单元测试；如何决定运行哪个main()方法：
+   ①对于记事本编程，若源文件Test.java中有Test和Test2两个类，都有main()方法，则在cmd窗口中先执行“javac Test.java”，会生成两个类的.class文件，
+   然后分别执行“java Test”和“java Test2”可分别运行两个main()方法；
+   ②对于eclipse等IDE编程，提供可视化选择。

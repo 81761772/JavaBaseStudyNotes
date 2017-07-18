@@ -1,0 +1,137 @@
+1.
+  for(int i = first;i < last;i++){
+      if(Condition){
+          return target;
+      }
+      return -1;
+  }
+
+  注意以上用法：for循环会一直进行，直到条件Condition得到满足，此时返回target，跳出for循环（需要注意的是，假如第一次循环和第二次循环都满足
+  Condition条件时，循环会在第一次跳出，而不执行第二次循环）。若一直到循环结束Condition都没有得到满足，则返回-1。
+
+2.目前来看，Java中不存在指针，而用引用来代替。
+
+3.equals()方法用于比较两个对象引用所指的内容是否相等，但因基本类型不是对象故无法调用方法，所以equals()方法不适用于基本类型；
+  而“==”运算符比较的是两个对象引用的地址是否相等。
+
+4.多态即对象类型的多种形态。
+
+5.多态的局限性：①只有非private方法才可以被覆盖（因为private方法被认为是final方法）；②只有方法调用可以是多态的（如域不是多态的）；
+  ③静态方法不具有多态性。
+
+6.static关键字不能应用于局部变量，只能作用于域。
+
+7.如果某个方法是静态的，它的行为就不具有多态性，eg:Father是Son的基类，他们都有eat()方法，进行向上转型：Father f = new Son();然后调用eat()
+  方法：f.eat()，若eat()被修饰为static，则调用基类的eat()，否则调用子类的eat()。
+
+8.Java中的字段有多种称呼：成员、数据成员、域。
+
+9.接口中定义的字段（如常量）必须赋予初值，因为在接口中定义的任何字段都是被static和final修饰的，而被final修饰的字段必须有初值。
+
+10.在接口中定义的方法必须被定义为public或abstract形式。
+
+11.被定义为final的常量定义时需要使用大写字母命名，并且中间使用下划线进行连接。
+
+12.在内部类中可以随意使用外部类的成员，即使这些成员被修饰为private。
+
+13.在一个编译单元（源文件）中只能有一个被修饰为public的类，且文件名应为该类名；当编译单元内无public类时，可随意给文件命名。
+
+14.若一个public类中有一个非public成员，则其他包中的类可通过导入包来操作这个public类，但不能操作这个非public成员。
+
+15.javadoc只能为public和protected成员进行文档注释，private和包内可访问成员的注释会被忽略掉，不过可以用-private进行标记，以便
+   把private成员的注释也包括在内。
+
+16.关于类的访问权限，有以下几点需要注意：
+   （1）类只能是public或包访问权限（内部类除外）；
+   （2）如果不希望他人对该类拥有访问权限，可以把构造器都指定为private，从而阻止他人创建该类的对象，但有一个例外，即该类的对象可在该类的static成员
+    内部创建。这种特性催生了两种在构造器被指定为privaete情况下得到该类对象的方法：
+    ①通过static方法返回该类的对象：
+     eg:
+        class Soup1{
+            private Soup1(){}
+            public static Soup1 makeSoup(){
+                return new Soup1();
+            }
+        }
+    
+    ②singleton模式：
+     eg:    class Soup2{
+                private Soup2(){}
+                private static Soup2 s = new Soup2();
+                public static Soup2 access(){
+                    return s;
+                }
+            }
+     在singleton模式中，当外部获取Soup2的对象时，Soup2类的对象是作为Soup2的一个static private成员被创建的，故只能获取到一个，
+     且只有通过一个public方法（该例中是access()）才能进行获取。
+   
+17.this关键字只能在方法内部使用，表示调用该方法的对象的引用，如this.a即该对象的成员，this.b()即该对象的方法。
+
+18.构建一个子类对象时，先执行其父类的构造方法，再执行自身的构造方法；除构造器外，编译器禁止在其他任何方法中调用构造器；尽管可以用this调用一个构造器，
+   但不能调用多个，而且必须将构造器调用语句置于起始处，eg:
+   class Test(){
+       Test(){
+           this(5);//在该构造器中调用另一个构造器，该语句必须置于构造器的开头。
+         //this(5);  只能调用一个。
+       }
+       Test(int i){
+           System.out.println(i);
+       }
+   }
+   
+19.如果想调用父类的一个带参数的构造器，则必须在子类的构造器中编写super(参数)语句。
+
+20.类的每个成员保证都会有一个初始值（对象引用初始值为NULL),但对于方法的局部变量，Java则不会提供初始值，eg:
+   class Test{
+       int i;//系统自动赋值为0
+       void test(){
+           int j;
+           System.out.println(j);//报错，j未初始化。
+       }
+   }
+
+21.可以在构造器中进行初始化，但构造器外的初始化优先于构造器内的初始化。
+
+22.静态对象初始化优先于非静态对象初始化。
+
+23.匿名内部类与普通内部类在实现向上转型为接口上有异曲同工之妙，普通内部类将实例化后的内部类对象赋给接口类型的引用以实现向上转型，而匿名内部类直接在
+   addActionListener()方法的括号内返回一个接口类型的匿名内部类对象，如下例eg:
+   JButton jb = new JButton();
+   jb.addActionListener(new ActionListener(){//括号内直接实例化了一个接口类型，省去了将实例化结果赋给接口类型的引用这一步
+       public void actionPerformed(ActionEvent arg0){}
+   });
+
+24.关于传递可变参数：eg: public Example(String...strings)
+   即调用时参数个数是可变的。
+
+25.需实现无限循环可用“while(true)”或“for(;;)”。
+
+26.Java中不支持多继承。
+
+27.对象存储在堆中，对象引用存储在堆栈中，基本类型（如int）存储在堆栈中，封装类（如Integer）存储在堆中。
+
+28.类的成员变量即使没有进行初始化也会获得一个默认值，但局部变量（如方法中定义的变量）不会。
+
+29.C语言的函数名不能重复，而Java可以对函数（方法）进行重载。
+
+30.现有一个方法：void exam(datatype n)，当调用该方法时传入参数的类型若小于datatype则自动提升，若大于datatype则需进行窄化转换。
+   Java类型由低字节到高字节提升规律如下：byte->short->int->long->float->double，char类型直接提升到int类型。
+   
+31.使用System.out.println("对象引用")方法打印对象时，会默认调用该对象的toString()方法。
+   
+32.别名现象：若两个对象引用最初分别指向不同的对象，那么当在两个对象引用之间采用“=”操作符，如“t1=t2"后，t1被覆盖，也就是丢失了，而
+   t1最初指向的对象会由垃圾回收器自动清理，最后t1和t2都指向t2最初指向的对象。
+   
+33.在Java里需要使用标签的唯一理由就是因为有循环嵌套存在，而且想从多层嵌套中break或continue。
+
+34.使用记事本编写Java程序时对包（Package）的相关操作：
+   eg:（本例是在源文件B中导入源文件A）
+   ①在“C:\java\exa”路径下创建源文件A，在java文件夹内的任意位置创建源文件B（在该例中B创建在exa之外，因为要进行导入测试），注意源文件B
+   和源文件A所在的包exa必须在同一个文件夹（在本例中该文件夹是java，包名是exa)中；
+   ②编辑A和B，A开头为“package exa;”，B开头为“import exa.A;”；
+   ③打开cmd窗口，进入B所在路径并执行B。
+   
+35.当一个源文件中有多个类时，可为每个类都创建一个main()方法，便于进行单元测试；如何决定运行哪个main()方法：
+   ①对于记事本编程，若源文件Test.java中有Test和Test2两个类，都有main()方法，则在cmd窗口中先执行“javac Test.java”，会生成两个类的.class文件，
+   然后分别执行“java Test”和“java Test2”可分别运行两个main()方法；
+   ②对于eclipse等IDE编程，提供可视化选择。

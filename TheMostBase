@@ -33,7 +33,7 @@
   }
   class Mill{
       Grain process(){
-          return new Wheat();
+          return new Grain();
       }
   }
   class WheatMill extends Mill{

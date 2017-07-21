@@ -59,19 +59,19 @@
   在Java SE5之前的版本强制process()的覆盖版本返回Grain。
 
 
-6.static关键字不能应用于局部变量，只能作用于域。
+7.static关键字不能应用于局部变量，只能作用于域。
 
-7.如果某个方法是静态的，它的行为就不具有多态性，eg:Father是Son的基类，他们都有eat()方法，进行向上转型：Father f = new Son();然后调用eat()
+8.如果某个方法是静态的，它的行为就不具有多态性，eg:Father是Son的基类，他们都有eat()方法，进行向上转型：Father f = new Son();然后调用eat()
   方法：f.eat()，若eat()被修饰为static，则调用基类的eat()，否则调用子类的eat()。
 
-8.Java中的字段有多种称呼：成员、数据成员、域。
+9.Java中的字段有多种称呼：成员、数据成员、域。
 
-9.接口中定义的字段（如常量）必须赋予初值，因为在接口中定义的任何字段都是被static和final修饰的（隐式）；而被final修饰的字段必须有初值，初值可以
+10.接口中定义的字段（如常量）必须赋予初值，因为在接口中定义的任何字段都是被static和final修饰的（隐式）；而被final修饰的字段必须有初值，初值可以
   是未赋值的字段，eg: int i; final int f = i; 
 
-10.在接口中定义的方法必须被定义为public或abstract形式。
+11.在接口中定义的方法必须被定义为public或abstract形式。
 
-11.eg:
+12.eg:
    class Father{
        public void say(){}
    }
@@ -83,6 +83,70 @@
        }
    }
    虽然在Son类中没有重写Father类的say()方法，仍可以基于son对象引用调用该方法。
+   
+13.适配器模式：“适配”即源到目标的适配，例如一个应聘者掌握Java基础知识和数据结构知识，但应聘的公司不仅要求应聘者掌握这两种知识，还要求掌握
+   数据库知识，故需要将源（应聘者）适配到目标（公司）。适配是为了实现某种目的而为一个源类暂时性的加上某种方法，故不能直接在应聘者类中添加
+   “数据库知识”方法。所以就要用到适配器来解决该问题。
+   适配器模式分为两种：
+   ①面向类的适配器模式：只为单一的某个类实现适配的模式
+    eg:
+    //源类代码
+    public class Applicant{
+        public void JavaKnowledge(){}
+        public void DataStructureKnowledge(){}
+    }
+    //目标接口代码
+    public interface Company{
+        public void JavaKnowledge(){}
+        public void DataStructureKnowledge(){}
+        public void DatabaseKnowledge(){}
+    }
+    //适配器代码
+    public class Adapter extends Applicant implements Company{
+        public void DatabaseKnowledge(){}
+    }
+    由于Java的普通类是单继承的，故Adapter只能继承Applicant这一个类，只为Applicant类实现适配。
+    
+    ②面向对象的适配器模式：将源作为一个对象聚合到适配器类中
+     eg:（源类和目标接口代码不变）
+     //适配器代码
+     public class Adapter implements Company{
+         Applicant applicant;
+         public Adapter(Applicant applicant){
+             this.applicant = applicant;
+         }
+         public void JavaKnowledge(){
+             applicant.JavaKnowledge();
+         }
+         public void DataStructureKnowledge(){
+             applicant.DataStructureKnowledge();
+         }
+         public void DatabaseKnowledge(){}
+     }
+     把“源”作为一个构造器参数传入适配器，然后执行接口所要求的方法，这种适配模式可以为多个源进行适配（如Applicant类的子类）。
+    注：
+    默认适配器模式：若想实现一个接口但只想实现接口中的一部分方法时，可用默认的适配器模式，即在接口和具体实现类之间添加一个抽象类，用抽象类去
+    空实现目标接口的所有方法。而具体的实现类只需覆盖其想要实现的方法即可。
+    eg:
+    //接口类
+    public interface Company{
+        public void JavaKnowledge();
+        public void DataStructureKnowledge();
+        public void DatabaseKnowledge();
+    }
+    //抽象类
+    public class CompanyDefault implements Company{
+        public void JavaKnowledge(){}
+        public void DataStructureKnowledge(){}
+        public void DatabaseKnowledge(){}
+    }
+    //实现类
+    public class CompanyUse extends CompanyDefault{
+        //只想实现接口中的DatabaseKnowledge()方法
+        public void DatabaseKnowledge(){
+            System.out.println("I know database well!");
+        }
+    }
 
 11.被定义为final的常量定义时需要使用大写字母命名，并且中间使用下划线进行连接。
 

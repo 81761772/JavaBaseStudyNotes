@@ -58,7 +58,6 @@
   方法Grain process()的返回类型Grain的导出类型。
   在Java SE5之前的版本强制process()的覆盖版本返回Grain。
 
-
 7.static关键字不能应用于局部变量，只能作用于域。
 
 8.如果某个方法是静态的，它的行为就不具有多态性，eg:Father是Son的基类，他们都有eat()方法，进行向上转型：Father f = new Son();然后调用eat()
@@ -147,8 +146,165 @@
             System.out.println("I know database well!");
         }
     }
-
+    
+14.工厂模式：工厂模式主要是为创建对象提供过渡接口，将创建对象的具体过程屏蔽隔离起来，以达到提高灵活性的目的。
+   为便于理解，举例如下：有个土豪有三辆车：宝马、奔驰和奥迪，当他坐上宝马时，对司机说“开宝马车”，坐奔驰时，对司机说“开奔驰车”，坐奥迪时，对司机说
+   “开奥迪车”。代码如下：
+   //以下几个类同包不同源。
+   //有Benz,Bmw,Audi三种车可供Driver驾驶。
+   public class Benz{
+       //调用drive()方法可执行开车行为
+       public void drive(){
+           System.out.println("Drive Benz");
+       }
+   }
+   public class Bmw{
+       public void drive(){
+           System.out.println("Drive Bwm");
+       }
+   }
+   public class Audi{
+       public void drive(){
+           System.out.println("Drive Audi");
+       }
+   }
+   //Driver可驾驶以下三种车
+   public class Driver{
+       public static Benz driveBenz(){
+           return new Benz();
+       }
+       public static Bmw driveBmw(){
+           return new Bmw();
+       }
+       public static Audi driveAudi(){
+           return new Audi();
+       }
+   }
+   public class Richman{
+       public static void main(String[] args){
+           //已经坐上奔驰车
+           Benz benz = Driver.driveBenz();
+           //对司机说“开奔驰车”
+           benz.drive();
+       }
+   }
+   
+   工厂模式分为三类：
+  （1）简单工厂模式：
+   组成成分：
+   ①工厂类角色：这是本模式的核心，含有一定的商业逻辑和判断逻辑。在Java中它往往由一个具体类实现。     
+   ②抽象产品角色：它一般是具体产品继承的父类或者实现的接口。在Java中由接口或者抽象类来实现。 
+   ③具体产品角色：工厂类所创建的对象就是此角色的实例。在Java中由一个具体类实现。
+   虽然上例的源码可以正常运行，但你会觉得土豪有毛病，直接说“开车”不就行了？简单工厂模式可解决该问题。代码如下：
+   //以下几个类同包不同源。
+   //抽象产品角色
+   public interface Car{
+       public void drive();
+   }
+   //具体产品角色
+   public class Benz implements Car{
+       public void drive(){
+           System.out.println("Drive Benz");
+       }
+   }
+   public class Bmw implements Car{
+       public void drive(){
+           System.out.println("Drive Bwm");
+       }
+   }
+   public class Audi implements Car{
+       public void drive(){
+           System.out.println("Drive Audi");
+       }
+   }
+   //工厂类角色
+   public class Driver{
+       //工厂方法，返回类型为抽象产品角色
+       public static Car driveCar(){
+           if(s.equalsIgnoreCase("Benz")){
+               return new Benz(); 
+           }else if(s.equalsIgnoreCase("Bmw")){
+               return new Bmw();
+           }else if(s.equalsIgnoreCase("Audi")){
+               return new Audi();
+           }else{
+               System.out.println("error");
+           }
+       }
+   }
+   //土豪是接受工厂模式服务的客户端。
+   public class Richman{
+       public static void main(String[] args){
+           //已经坐上奔驰车
+           Car car = Driver.driverCar("benz");
+           //对司机说“开车”
+           car.drive();
+       }
+   }
+   通过使用简单工厂模式，不仅矫正了土豪的“毛病”，而且使客户端不必直接创建产品对象，只是负责消费产品。
+    
+  （2）工厂方法模式：
+   组成成分：
+   ①抽象工厂角色：这是工厂方法模式的核心，它与应用程序无关。是具体工厂角色必须实现的接口或者必须继承的父类。在java中它由抽象类或者接口来实现。 
+   ②具体工厂角色：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。 
+   ③抽象产品角色：它是具体产品继承的父类或者是实现的接口。在java中一般有抽象类或者接口来实现。 
+   ④具体产品角色：具体工厂角色所创建的对象就是此角色的实例。在java中由具体的类来实现。 
+   从开闭原则（对扩展开放；对修改封闭）来分析简单工厂模式。当客户（土豪）想添加具体产品角色（新买一辆车）的时候，只要符合抽象产品角色的特征，
+   那么通知工厂类（司机）就可以被客户使用了。故对产品部分来说，它是符合开闭原则的；但工厂部分并不理想，因为每添加一件具体产品角色，都要在工厂类中
+   增加相应的业务逻辑或判断逻辑，这显然是违背开闭原则的。可想而知对于新产品的加入，工厂类是很被动的。
+   这样的工厂类被称为上帝类（具有太多功能而难以维护的类）。形象点说就是土豪新买了很多辆车，司机难以管理维护。
+   而工厂方法模式可解决以上问题。代码如下：
+   //以下几个类同包不同源。
+   //抽象产品角色
+   public interface Car{
+       public void drive();
+   }
+   //具体产品角色
+   public class Benz implements Car{
+       public void drive(){
+           System.out.println("Drive Benz");
+       }
+   }
+   public class Bmw implements Car{
+       public void drive(){
+           System.out.println("Drive Bwm");
+       }
+   }
+   public class Audi implements Car{
+       public void drive(){
+           System.out.println("Drive Audi");
+       }
+   }
+   //抽象工厂角色 
+   public interface Driver{ 
+       public Car driverCar(); 
+   } 
+   //具体工厂角色
+   public class BenzDriver implements Driver{ 
+       public Car driverCar(){ 
+           return new Benz(); 
+       } 
+   } 
+   public class BmwDriver implements Driver{ 
+       public Car driverCar(){ 
+           return new Bmw(); 
+       } 
+   } 
+   //客户端
+   public class Richman{ 
+       public static void main(String[] args){  
+           Driver driver = new BenzDriver(); 
+           Car car = driver.driverCar(); 
+           car.drive(); 
+   } 
+   相比简单工厂模式，工厂方法模式将工厂类角色分为抽象工厂角色和具体工厂角色。形象点说，即土豪感觉司机管理这么多车有些力不从心，且念到司机这些年
+   兢兢业业为自己工作，于是给司机升了管理岗，又招了几个新司机分别负责每辆车，由老司机来管理这些新司机。
+   
+  （3）抽象工厂模式：（待补充）
+    
 11.被定义为final的常量定义时需要使用大写字母命名，并且中间使用下划线进行连接。
+
+---内部类预定---
 
 12.在内部类中可以随意使用外部类的成员，即使这些成员被修饰为private。
 

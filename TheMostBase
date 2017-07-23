@@ -1,14 +1,3 @@
-1.
-  for(int i = first;i < last;i++){
-      if(Condition){
-          return target;
-      }
-      return -1;
-  }
-
-  注意以上用法：for循环会一直进行，直到条件Condition得到满足，此时返回target，跳出for循环（需要注意的是，假如第一次循环和第二次循环都满足
-  Condition条件时，循环会在第一次跳出，而不执行第二次循环）。若一直到循环结束Condition都没有得到满足，则返回-1。
-
 2.目前来看，Java中不存在指针，而用引用来代替。
 
 4.多态即对象类型的多种形态。
@@ -375,8 +364,6 @@
 24.关于传递可变参数：eg: public Example(String...strings)
    即调用时参数个数是可变的。
 
-25.需实现无限循环可用“while(true)”或“for(;;)”。
-
 26.Java中的普通类不支持多继承，但接口支持多继承以起到扩展功能的作用。
 
 27.对象存储在堆中，对象引用存储在堆栈中，基本类型（如int）存储在堆栈中，封装类（如Integer）存储在堆中。
@@ -389,8 +376,6 @@
    Java类型由低字节到高字节提升规律如下：byte->short->int->long->float->double，char类型直接提升到int类型。
    
 31.使用System.out.println("对象引用")方法打印对象时，会默认调用该对象的toString()方法。
-   
-33.在Java里需要使用标签的唯一理由就是因为有循环嵌套存在，而且想从多层嵌套中break或continue。
 
 34.使用记事本编写Java程序时对包（Package）的相关操作：
    eg:（本例是在源文件B中导入源文件A）

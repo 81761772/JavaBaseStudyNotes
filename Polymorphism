@@ -1,1 +1,46 @@
+1.多态即对象类型的多种形态。
 
+2.多态的局限性：①只有非private方法才可以被覆盖（因为private方法被认为是final方法）；②只有方法调用可以是多态的（如域不是多态的）；
+  ③静态方法不具有多态性。
+
+3.Java SE5中添加了协变返回类型，它表示在导出类中的被覆盖方法可以返回基类方法的返回类型的某种导出类型。
+  eg:
+  class Grain{
+      public String toString(){
+          return "Grain";
+      }
+  }
+  class Wheat extends Grain{
+      public String toString(){
+          return "Wheat";
+      }
+  }
+  class Mill{
+      Grain process(){
+          return new Grain();
+      }
+  }
+  class WheatMill extends Mill{
+      Wheat process(){
+          return new Wheat();
+      }
+  }
+  public class CovariantReturn{
+      public static void main(String[] args){
+          Mill m = new Mill();
+          Grain g = m.process();
+          System.out.println(g);
+          m = new WheatMill();
+          g = m.process();
+          System.out.println(g);
+      }
+  }
+  /*输出结果：
+    Grain
+    Wheat*/
+  就此例对协变返回类型的概念作详解：导出类是WheatMill，被覆盖方法是Wheat process()，它返回的是Wheat类型，而Wheat就是WheatMill的基类Mill的
+  方法Grain process()的返回类型Grain的导出类型。
+  在Java SE5之前的版本强制process()的覆盖版本返回Grain。
+
+4.如果某个方法是静态的，它的行为就不具有多态性，eg:Father是Son的基类，他们都有eat()方法，进行向上转型：Father f = new Son();然后调用eat()
+  方法：f.eat()，若eat()被修饰为static，则调用基类的eat()，否则调用子类的eat()。

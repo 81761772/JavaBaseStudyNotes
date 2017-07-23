@@ -1,1 +1,40 @@
+1.在一个编译单元（源文件）中只能有一个被修饰为public的类，且文件名应为该类名（内部类除外）；当编译单元内无public类时，可随意给文件命名。
 
+2.若一个public类中有一个非public成员，则其他包中的类可通过导入包来操作这个public类，但不能操作这个非public成员。
+
+3.关于类的访问权限，有以下几点需要注意：
+ （1）类只能是public或包访问权限（内部类除外）；
+ （2）如果不希望他人对该类拥有访问权限，可以把构造器都指定为private，从而阻止他人创建该类的对象，但有一个例外，即该类的对象可在该类的static成员
+      内部创建。这种特性催生了两种在构造器被指定为privaete情况下得到该类对象的方法：
+      ①通过static方法返回该类的对象：
+       eg:
+       class Soup1{
+           private Soup1(){}
+           public static Soup1 makeSoup(){
+                   return new Soup1();
+           }
+       }
+    
+      ②singleton模式：
+       eg:    
+       class Soup2{
+           private Soup2(){}
+           private static Soup2 s = new Soup2();
+           public static Soup2 access(){
+               return s;
+           }
+       }
+      在singleton模式中，当外部获取Soup2的对象时，Soup2类的对象是作为Soup2的一个static private成员被创建的，故只能获取到一个，
+      且只有通过一个public方法（该例中是access()）才能进行获取。
+
+4.使用记事本编写Java程序时对包（Package）的相关操作：
+  eg:（本例是在源文件B中导入源文件A）
+  ①在“C:\java\exa”路径下创建源文件A，在java文件夹内的任意位置创建源文件B（在该例中B创建在exa之外，因为要进行导入测试），注意源文件B
+  和源文件A所在的包exa必须在同一个文件夹（在本例中该文件夹是java，包名是exa)中；
+  ②编辑A和B，A开头为“package exa;”，B开头为“import exa.A;”；
+  ③打开cmd窗口，进入B所在路径并执行B。
+   
+5.当一个源文件中有多个类时，可为每个类都创建一个main()方法，便于进行单元测试；如何决定运行哪个main()方法：
+  ①对于记事本编程，若源文件Test.java中有Test和Test2两个类，都有main()方法，则在cmd窗口中先执行“javac Test.java”，会生成两个类的.class文件，
+  然后分别执行“java Test”和“java Test2”可分别运行两个main()方法；
+  ②对于eclipse等IDE编程，提供可视化选择。

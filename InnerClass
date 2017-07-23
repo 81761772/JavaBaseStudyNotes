@@ -1,0 +1,11 @@
+1.如果想生成对外部类对象的引用，可使用“外部类名字.this”。
+
+2.在内部类中可以随意使用外部类的成员，即使这些成员被修饰为private。
+
+3.匿名内部类与普通内部类在实现向上转型为接口上有异曲同工之妙，普通内部类将实例化后的内部类对象赋给接口类型的引用以实现向上转型，而匿名内部类直接在
+  addActionListener()方法的括号内返回一个接口类型的匿名内部类对象，如下例
+  eg:
+  JButton jb = new JButton();
+  jb.addActionListener(new ActionListener(){//括号内直接实例化了一个接口类型，省去了将实例化结果赋给接口类型的引用这一步
+      public void actionPerformed(ActionEvent arg0){}
+  });

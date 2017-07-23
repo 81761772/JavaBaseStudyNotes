@@ -55,19 +55,6 @@
   是未赋值的字段，eg: int i; final int f = i; 
 
 11.在接口中定义的方法必须被定义为public或abstract形式。
-
-12.eg:
-   class Father{
-       public void say(){}
-   }
-   class Son extends Father{}
-   public class Meet{
-       public static void main(String[] args){
-           Son son = new Son();
-           son.say();
-       }
-   }
-   虽然在Son类中没有重写Father类的say()方法，仍可以基于son对象引用调用该方法。
    
 13.适配器模式：“适配”即源到目标的适配，例如一个应聘者掌握Java基础知识和数据结构知识，但应聘的公司不仅要求应聘者掌握这两种知识，还要求掌握
    数据库知识，故需要将源（应聘者）适配到目标（公司）。适配是为了实现某种目的而为一个源类暂时性的加上某种方法，故不能直接在应聘者类中添加
@@ -296,8 +283,6 @@
 
 15.javadoc只能为public和protected成员进行文档注释，private和包内可访问成员的注释会被忽略掉，不过可以用-private进行标记，以便
    把private成员的注释也包括在内。
-   
-17.this关键字只能在方法内部使用，表示调用该方法的对象的引用，如this.a即该对象的成员，this.b()即该对象的方法。
 
 23.匿名内部类与普通内部类在实现向上转型为接口上有异曲同工之妙，普通内部类将实例化后的内部类对象赋给接口类型的引用以实现向上转型，而匿名内部类直接在
    addActionListener()方法的括号内返回一个接口类型的匿名内部类对象，如下例eg:

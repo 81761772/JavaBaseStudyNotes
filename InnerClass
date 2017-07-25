@@ -10,19 +10,29 @@
       public void actionPerformed(ActionEvent arg0){}
   });
   
-  4.关于内部类的被继承：
-    eg:
-    class Outer{
-        class Inner{}
-    }
-    //注意Outer.Inner
-    public class Test extends Outer.Inner{
-        public Test(Outer outer){
-            outer.super();
-        }
-        public static void main(String[] args){
-            Outer outer = new Outer();
-            Test t = new Test(outer);
-        }
-    }
-    在继承内部类时，内部类指向其外部类的“秘密的”引用必须被初始化，故要在导出类中自定义构造器，构造器包含语句“外部类引用.super()”。
+4.关于内部类的被继承：
+  eg:
+  class Outer{
+      class Inner{}
+  }
+  //注意Outer.Inner
+  public class Test extends Outer.Inner{
+      public Test(Outer outer){
+          outer.super();
+      }
+      public static void main(String[] args){
+          Outer outer = new Outer();
+          Test t = new Test(outer);
+      }
+  }
+  在继承内部类时，内部类指向其外部类的“秘密的”引用必须被初始化，故要在导出类中自定义构造器，构造器包含语句“外部类引用.super()”。
+
+5.内部类还有一个有趣的特性：可被当作外部类的一个方法被重写。
+  eg:
+  class Grandfather{
+      class Son{}//将内部类当成一个方法
+  }
+  public class Father extends Grandfather{
+      class Son{}//对方法进行重写
+  }
+  然而并不像方法被覆盖后那样，这两个内部类仍是完全独立的两个实体，各自在自己的命名空间内。

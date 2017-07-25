@@ -9,3 +9,20 @@
   jb.addActionListener(new ActionListener(){//括号内直接实例化了一个接口类型，省去了将实例化结果赋给接口类型的引用这一步
       public void actionPerformed(ActionEvent arg0){}
   });
+  
+  4.关于内部类的被继承：
+    eg:
+    class Outer{
+        class Inner{}
+    }
+    //注意Outer.Inner
+    public class Test extends Outer.Inner{
+        public Test(Outer outer){
+            outer.super();
+        }
+        public static void main(String[] args){
+            Outer outer = new Outer();
+            Test t = new Test(outer);
+        }
+    }
+    在继承内部类时，内部类指向其外部类的“秘密的”引用必须被初始化，故要在导出类中自定义构造器，构造器包含语句“外部类引用.super()”。

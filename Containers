@@ -19,3 +19,31 @@
 
 3.在JavaSE5之前，容器存储的对象只有通用类型Object，如果想在容器（集合类，如Map,Set,List）中存储更具体的类型，就需要执行向下转型，
   但这种操作是有风险的，所以JavaSE5增加了参数化类型（即泛型），解决了上述问题。
+  
+4.为Collection容器添加一组元素有以下几种方式：（①②③是关联的）
+  ①∵Arrays.asList()方法接受一个数组或一个用逗号分隔的元素列表（使用可变参数），并将其转换为一个List对象，在ArrayList进行实例化时将该List对象
+   作为参数传入构造方法。eg：
+   Collection<Integer> collection = new ArrayList<Integer>(Arrays.asList(1,2,3));
+  ②Collections.addAll()方法接受一个Collection对象，以及一个数组或一个用逗号分隔的列表，将元素添加到Collection中。eg:
+   Integer[] moreInts = {4,5,6};
+   collection.addAll(Arrays.asList(moreInts));
+  ③Collection的构造器可以接受另一个Collection，用它来将自身初始化。eg:
+   Collections.addAll(collection,7,8,9);
+  ④直接使用Arrays.asList()方法返回一个List对象并赋给容器引用。eg:
+   List<Integer> list = Arrays.asList(10,11,12);
+   
+5.关于显式类型参数说明：
+  eg:
+  class Snow{}
+  class Powder extends Snow{}
+  class Light extends Powder{}
+  class Heavy extends Powder{}
+  public class AsListInference{
+      public static void main(String[] args){
+          List<Snow> snow = Arrays.asList(new Light(),new Heavy());
+      }
+  }
+  ∵Light和Heavy继承自Powder，∴当试图创建snow时，Arrays.asList()中只有Power类型，因此它会创建List<Powder>而不是List<Snow>。
+  针对这种情况，可以在Arrays.asList()中间插入一条“线索”，以告诉编译器对于由Arrays.asList()产生的List类型，实际的目标类型应该是什么，这就是
+  显式类型参数说明。eg:
+  List<Snow> snow = Arrays.<Snow>asList(new Light(),new Heavy());

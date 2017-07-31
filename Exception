@@ -5,3 +5,13 @@ public class MyException extends Exception{
     }
 }
 以上代码创建了一个自定义异常，需要注意的是：父类默认构造方法是不含参的，如果需要在子类的构造函数中传递参数，则需要使用super(传递参数)。
+
+2.
+try{
+    //代码
+}catch(ExceptionType1 e1){
+    //代码
+}catch(ExceptionType2 e2){
+    //代码
+}
+如果抛出异常的数据类型与ExceptionType1匹配，它在这里就会被捕获。如果不匹配，它会被传递给第二个catch块。

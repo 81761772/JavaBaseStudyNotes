@@ -15,3 +15,60 @@ try{
     //代码
 }
 如果抛出异常的数据类型与ExceptionType1匹配，它在这里就会被捕获。如果不匹配，它会被传递给第二个catch块。
+
+3.重抛异常会把异常抛给上一级环境中的异常处理程序，同一个try块的后续catch子句将被忽略。
+
+4.若想把当前异常对象重新抛出，那么printStackTrace()方法显示的将是原来异常抛出点的调用栈信息，而并非重新抛出点的信息，要想更新这个信息，
+  可以调用fillInStackTrace()方法，该方法将返回一个Throwable对象，它是通过把当前调用栈信息填入原来那个异常对象而建立的。eg:
+  public class Test{
+      public static void f() throws Exception{
+          throw new Exception("f()");
+      }
+      public static void g() throws Exception{
+          try{
+              f();
+          }catch(Exception e){
+              e.printStackTrace(System.out);
+              throw e;
+          }
+      }
+      public static void h() throws Exception{
+          try{
+              f();
+          }catch(Exception e){
+              e.printStackTrace(System.out);
+              throw (Exception)e.fillInStackTrace();
+          }
+      }
+      public static void main(String[] args){
+          try{
+              g();
+          }catch(Exception e){
+              e.printStackTrace(System.out);
+          }
+          try{
+              h();
+          }catch(Exception e){
+              e.printStackTrace(System.out);
+          }
+      }
+  }
+  /*Output:
+  java.lang.Exception: f()
+	at com.study.Test.f(Test.java:7)
+	at com.study.Test.g(Test.java:11)
+	at com.study.Test.main(Test.java:27)
+  java.lang.Exception: f()  //使用pringStackTrace()方法后仍显示f()方法的异常
+	at com.study.Test.f(Test.java:7)
+	at com.study.Test.g(Test.java:11)
+	at com.study.Test.main(Test.java:27)
+  java.lang.Exception: f()
+	at com.study.Test.f(Test.java:7)
+	at com.study.Test.h(Test.java:19)
+	at com.study.Test.main(Test.java:32)
+  java.lang.Exception: f()  //使用fillInStackTrace()方法后不再显示f()方法的异常
+	at com.study.Test.h(Test.java:22)
+	at com.study.Test.main(Test.java:32)
+  */
+
+4.可以声明方法将抛出异常，实际上却不抛出，这样做的好处是为异常先占个位子，以后就可以抛出这种异常而不用修改已有的代码。

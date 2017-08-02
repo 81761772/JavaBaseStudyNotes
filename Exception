@@ -88,8 +88,8 @@ try{
    ArriveLateException ale = new ArriveLateException(e);
    throw ale;
   还有一点需要注意：当使用RuntimeException作为新异常对原始异常进行包装时，bossSay()方法不需要加上“throws ArriveLateException”后缀，
-  因为RuntimeException 是那些可能在 Java 虚拟机正常运行期间抛出的异常的超类。可能在执行方法期间抛出但未被捕获的 RuntimeException 的
-  任何子类都无需在 throws 子句中进行声明。
+  因为RuntimeException 是那些可能在 Java 虚拟机正常运行期间抛出的异常的超类，可能在执行方法期间抛出但未被捕获的RuntimeException的
+  任何子类都无需在throws子句中进行声明。
   
   eg:
   class TrafficJamException extends Exception{}

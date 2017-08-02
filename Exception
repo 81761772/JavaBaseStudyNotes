@@ -72,3 +72,64 @@ try{
   */
 
 4.可以声明方法将抛出异常，实际上却不抛出，这样做的好处是为异常先占个位子，以后就可以抛出这种异常而不用修改已有的代码。
+
+5.关于异常链：若想要在捕获一个异常后抛出另一个异常，且希望保存原始异常的信息，可以使用异常链机制。
+  ---------        -------------
+  |原始异常| <---> |cause|新异常|   （左图为异常链概念模型）
+  ---------        ------------- 
+  Throwable的子类在构造器中可以接受一个cause（因由）作为参数，这个cause就是原始异常的引用。通过把原始异常传递给新的异常，可以实现
+  既能在当前位置创建并抛出新异常，又能通过cause在这个异常链中追踪到异常最初发生的位置。在Throwable的子类中，只有三种基本的异常类提供了带cause参数
+  的构造器，它们是Error、Exception和RuntimeException，若要把其他类型的异常链接起来，应该使用initCause()方法而不是构造器。
+  即实现异常链有两种方法：
+  ①使用initCause()方法：
+   如下例第108-110行。
+  ②调用异常类的带cause参数的构造器：
+   将下例第108-110行改为：
+   ArriveLateException ale = new ArriveLateException(e);
+   throw ale;
+  还有一点需要注意：当使用RuntimeException作为新异常对原始异常进行包装时，bossSay()方法不需要加上“throws ArriveLateException”后缀，
+  因为RuntimeException 是那些可能在 Java 虚拟机正常运行期间抛出的异常的超类。可能在执行方法期间抛出但未被捕获的 RuntimeException 的
+  任何子类都无需在 throws 子句中进行声明。
+  
+  eg:
+  class TrafficJamException extends Exception{}
+  class ArriveLateException extends Exception{
+      public ArriveLateException(){}
+  }
+  public class Boss{
+      public void workerSay() throws TrafficJamException{
+	  throw new TrafficJamException();
+      }
+      public void bossSay() throws ArriveLateException{
+	  try{
+	      workerSay();
+	  }catch(TrafficJamException e){
+	      e.printStackTrace();
+	      ArriveLateException ale = new ArriveLateException();
+	      ale.initCause(e);
+	      throw ale;
+	  }
+      }
+      public static void main(String[] args){
+	  try{
+	      new Boss().bossSay();
+	  }catch(Exception e){
+	      e.printStackTrace();
+	  }
+      }
+  }
+  /*Output:
+  com.study.TrafficJamException
+	at com.study.Boss.workerSay(Boss.java:11)
+	at com.study.Boss.bossSay(Boss.java:16)
+	at com.study.Boss.main(Boss.java:27)
+  com.study.ArriveLateException
+	at com.study.Boss.bossSay(Boss.java:19)
+	at com.study.Boss.main(Boss.java:27)
+  Caused by: com.study.TrafficJamException
+	at com.study.Boss.workerSay(Boss.java:11)
+	at com.study.Boss.bossSay(Boss.java:16)
+	... 1 more
+  */
+  如果职员在上班路上发生了堵车异常（假设一定迟到），则会被老板视为发生了迟到异常，即“堵车异常”是迟到异常的因由（cause）。
+  但老板并不在乎职员的迟到原因，所以只抛出迟到异常，而将堵车异常留作案底保存。

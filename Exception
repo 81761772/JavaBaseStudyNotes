@@ -132,3 +132,44 @@ try{
   */
   如果职员在上班路上发生了堵车异常（假设一定迟到），则会被老板视为发生了迟到异常，即“堵车异常”是迟到异常的因由（cause）。
   但老板并不在乎职员的迟到原因，所以只抛出迟到异常，而将堵车异常留作案底保存。
+
+7.异常丢失：有以下两种方式：
+  ①eg:
+   public class LostException1{
+       public void one() throws Exception{
+           throw new Exception();
+       }
+       public void two() throws Exception{
+           throw new Exception();
+       }
+       public static void main(String[] args){
+           try{
+	       LostException1 le1 = new LostException1();
+	       try{
+	           le1.one();
+	       }finally{
+	           le1.two();
+	       }
+	   }catch(Exception e){
+	       e.printStackTrace();
+	   }
+       }
+   }
+   /*Output:
+     java.lang.Exception
+	at com.study.LostException1.two(Test.java:6)
+	at com.study.LostException1.main(Test.java:14)
+   */
+   输出中的one()方法的异常信息不见了，它被finally子句里的two()方法的异常信息所取代。
+   
+  ②eg:
+   public class LostException2{
+       public static void main(String[] args){
+           try{
+	       throw new Exception();
+	   }finally{
+	       return;
+	   }
+       }
+   }
+   从finally子句中返回或从catch子句中返回，即使抛出了异常，也不会产生任何输出。

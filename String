@@ -16,3 +16,5 @@
 
 2.当使用为String对象重载的“+”操作符时，编译器是默认使用StringBuilder对象的方法来连接字符串的。当在toString()方法中使用循环，编译器就会
   创建多个StringBuilder对象，这样系统开销就比较大，最好自己创建该对象而不使用重载操作符“+”。
+
+3.System.out对象的format()方法模仿自C的printf()。eg:System.out.format("%d%d",x,y);

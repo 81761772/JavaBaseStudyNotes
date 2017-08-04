@@ -6,3 +6,5 @@
 
 3.现有一个方法：void exam(datatype n)，当调用该方法时传入参数的类型若小于datatype则自动提升，若大于datatype则需进行窄化转换。
   Java类型由低字节到高字节提升规律如下：byte->short->int->long->float->double，char类型直接提升到int类型。
+  
+4.操作符的重载：一个操作符在应用于特定的类时，被赋予了特殊的意义，如在String中使用“+”和“+=”来连接字符串。

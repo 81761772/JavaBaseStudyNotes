@@ -3,3 +3,26 @@
 2.泛型的类型参数只能是对象类型，不能是基本类型（如int)，如需在泛型中操作基本类型，可使用封装类（如使用Integer对int进行封装）。
 
 3.泛型类定义的泛型在整个类范围内都适用，泛型方法定义的泛型只在本方法中适用。
+
+4.元组：将一组对象直接打包存储于其中的一个单一对象。这个容器对象允许读取其中元素，但不允许向其中存放新的对象。eg:
+  public class ThreeTuple<A,B,C>{
+      public final first;
+      public final second;
+      public final third;
+      public ThreeTuple(A a,B b,C c){
+          first = a;
+          second = b;
+          third = c;
+      }
+      public String toString(){
+          return first+" "+second+" "+third;
+      }
+      public static void main(String[] args){
+          Integer i = 1;
+          Character c = 'c';
+          String s = "str";
+          //等号左侧的类型参数可有可无。
+          ThreeTuple<Integer,Character,String> tt = new ThreeTuple(i,c,s);
+          System.out.println(tt);
+      }
+  /*Output:1 c str

@@ -26,3 +26,4 @@
           System.out.println(tt);
       }
   /*Output:1 c str
+  可以最初按需求设置任意元组长度，也可后期通过继承实现长度更长的元组。

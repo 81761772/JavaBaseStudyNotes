@@ -19,3 +19,5 @@
   BufferedReader br = new BufferedReader(new FileReader("D:/test.txt"));
   //这种形式只要关闭装饰类数据流即可。
   br.close();
+
+4.readLine()方法在读取文件时，会自动删除行末尾的换行符。

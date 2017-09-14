@@ -6,3 +6,16 @@
   设计后两者主要是为了国际化：旧的I/O流继承层次机构仅支持8位字节流，且不能很好地处理16位的Unicode字符（Unicode用于字符国际化）。
   但有时必须结合使用字节和字符层次结构中的类：InputStreamReader可将InputStream转换为Reader，而OutputStreamWriter可将OutputStream
   转换为Writer。
+
+3.关于被装饰数据流的关闭问题(此概念仍存疑，以后若发现有误即改)：
+  eg1:
+  FileReader fr = new FileReader("D:/test.txt");
+  BufferedReader br = new BufferedReader(fr);
+  //这种形式需分开关闭数据流。
+  fr.close();
+  br.close();
+  
+  eg2:
+  BufferedReader br = new BufferedReader(new FileReader("D:/test.txt"));
+  //这种形式只要关闭装饰类数据流即可。
+  br.close();

@@ -26,3 +26,5 @@
 　　　　②同步方法：不能使用synchronized修饰run()方法;
  
 6.wait()和notify()方法只能被同步监听器对象调用。
+
+7.Lock机制不存在同步锁的概念，故不能使用wait()和notify()方法实现线程通信，解决方法是实现Condition接口并调用相关方法。

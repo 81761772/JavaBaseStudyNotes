@@ -22,3 +22,4 @@
 
 11.当使用“当前类名.class.getResource(String src)”获取所需资源的url时，常用方法如下：
    设包a中存在类A和包a.b，a.b中存在类A需要的图片资源test.png，使用“A.class.getResource("/a/b/test.png")”即可获取资源url。
+   原理：("/")表示路径"bin"。

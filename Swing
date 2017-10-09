@@ -1,5 +1,6 @@
-1.关于获取图片所在的URL:
-  当使用 “URL url = 类名.class.getResource("图片名.jpg")” 获取图片URL时，图片应放在文件夹bin中和.class文件在一起。
+1.设置窗体颜色：可直接对JFrame设置，但可能被容器组件覆盖，一般使用如下方法：
+  Container con = getContentPane();
+	con.setBackground(Color.red);
   
 2.需要添加按钮组时，不需要“con.add(group)”之类的语句，只需正常使用“con.add(按钮引用名)”和“group.add(按钮引用名)”即可。
 

@@ -16,6 +16,14 @@
 
 2.当使用为String对象重载的“+”操作符时，编译器是默认使用StringBuilder对象的方法来连接字符串的。当在toString()方法中使用循环，编译器就会
   创建多个StringBuilder对象，这样系统开销就比较大，最好自己创建该对象而不使用重载操作符“+”。
+  
+3.String,StringBuilder和StringBuffer的区别：
+  ①String相当于字符串常量，内容不可变，eg:
+   String str = "abc";
+   str = str+d;
+   输出结果为"abcd"，内容看似发生变化，其实是创建了一个新的String对象，之前的对象被垃圾回收，这样操作效率较低。
+   而StringBuilder和StringBuffer相当于字符串变量，内容可变，操作效率较高。
+  ②StringBuffer是线程安全的，StringBuilder是非线程安全的。
 
-3.System.out对象的format()方法模仿自C的printf()。eg:System.out.format("%d%d",x,y);
+4.System.out对象的format()方法模仿自C的printf()。eg:System.out.format("%d%d",x,y);
   java.util.Formatter类也有format()方法,String类也有名为format的方法，只不过用法不同。
